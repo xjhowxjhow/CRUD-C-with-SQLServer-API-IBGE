@@ -76,6 +76,69 @@ namespace WinFormsApp2
         {
                     }
 
+        private void cmb_estado_insert_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine("INDEX MUDADO ESTADOS");
+            //PEGA A SIGLA DO ESTADO DO COMBO ESTADO PARA FAZER A BUSCA DAS CIDADES
+            ComboBox acess_combo_estado = sender as ComboBox;
+            Console.WriteLine("COMBO ESTADO"+acess_combo_estado.Text);
+
+            //acess combo cidades
+
+            string combo_city= "Cidade";
+            ComboBox cbx_city = this.Controls.Find(combo_city, true).FirstOrDefault() as ComboBox;
+
+            //argumento com UF
+            var city = Cidades.BuscaCidade(acess_combo_estado.Text);
+            cbx_city.Items.Clear();
+            cbx_city.Text = "";
+
+            for (int i = 0; i < city.Count; i++)
+            {
+                cbx_city.Items.Add(city[i].Nome);
+            }
+
+
+  
+
+
+        }
+
+        private void cmb_regiao_insert_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine("INDEX MUDADO");
+            //DICIONARIO
+            Dictionary<string, int> dic_reg = new Dictionary<string, int>()
+             {
+                 {"Norte",1},
+                 { "Nordeste",2},
+                 { "Sudeste",3},
+                 { "Sul",4},
+                 {"Centro-Oeste",5}
+              };
+
+            
+            ComboBox acess_combo_reg = sender as ComboBox;
+            //ACESSA O DICIONARIO CONFORME O TEXTO DO COMBOBOX RETORNA 1 A 5 DE REGIAO
+            Console.WriteLine(dic_reg[acess_combo_reg.Text]);
+            //BUSCA COMBOBOX DE ESTADOS
+            string combo_estado = "Estado";
+            ComboBox cbx_estado = this.Controls.Find(combo_estado, true).FirstOrDefault() as ComboBox;
+            //Busca estados de acordo com o index:
+            int index= dic_reg[acess_combo_reg.Text];
+            //variavel para acessar a função
+            var ufs = Estados.BuscaEstado(index);
+            cbx_estado.Items.Clear();
+            cbx_estado.Text = "";
+            for (int i = 0; i < ufs.Count; i++)
+            {
+                Console.WriteLine(ufs[i].Sigla);
+                cbx_estado.Items.Add(ufs[i].Sigla);
+            }
+
+            
+
+        }
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             Console.WriteLine("FUNÇÃO EDITAR CHANGED COMBOBOX");
@@ -171,6 +234,9 @@ namespace WinFormsApp2
                                 // insere as regioes cmb_insert.Items.Add("Feminino");
 
                                 cmb_estado_insert.Size = new System.Drawing.Size(100, 23);
+                                //ADICIONA O EVENTO QUE CHAMA A FUNÇÃO DO COMBOBOX SE ELE MUDAR DE INDEX 
+                                cmb_estado_insert.SelectedIndexChanged += new EventHandler(cmb_estado_insert_SelectedIndexChanged);
+
 
                                 this.add_coluns_comb.Controls.Add(cmb_estado_insert);
                                 break;
@@ -183,12 +249,14 @@ namespace WinFormsApp2
 
                                 var reg = Regiao.BuscaRegiao();
                                 //ADICIONANDO REGIOES NO COMBO
-                                for (int r = 1; r < reg.Count; r++)
+                                for (int r = 0; r < reg.Count; r++)
                                 {
                                     cmb_regiao_insert.Items.Add(reg[r].Nome) ;
                                 }
 
                                 cmb_regiao_insert.Size = new System.Drawing.Size(100, 23);
+                                //ADICIONA O EVENTO QUE CHAMA A FUNÇÃO DO COMBOBOX SE ELE MUDAR DE INDEX 
+                                cmb_regiao_insert.SelectedIndexChanged += new EventHandler(cmb_regiao_insert_SelectedIndexChanged);
 
                                 this.add_coluns_comb.Controls.Add(cmb_regiao_insert);
                                 break;
