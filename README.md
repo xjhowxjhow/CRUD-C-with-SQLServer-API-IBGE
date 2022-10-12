@@ -1,5 +1,5 @@
 # CRUD-C-with-SQLServer
-Crud Basico em C# utizando o Windows Forms + API IBGE, com adição de objetos dinamicamente conforme tabelas do Banco de dados.
+Crud Basico em C# utilizando o Windows Forms + API IBGE, com adição de objetos dinamicamente conforme tabelas do Banco de dados.
 
 
 <h2 style=""> API IBGE Região>Estados>Cidades:</h2>
